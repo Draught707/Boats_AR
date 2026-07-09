@@ -6,18 +6,24 @@
     <title>AR с CAD-моделью</title>
     <!-- Подключаем локальные библиотеки -->
     <script src="libs/aframe.min.js"></script>
-    <script src="libs/aframe-ar.js"></script>
+    <script src="libs/aframe-ar.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
       <a-marker preset="hiro">
+        <!-- Сначала тестовый куб для проверки -->
+        <a-box color="red" position="0 0.5 0" scale="0.3 0.3 0.3"></a-box>
+        
+        <!-- Потом ваша модель (раскомментируйте, когда куб заработает) -->
+        <!--
         <a-entity
           position="0 0 0"
           rotation="-90 0 0"
           scale="0.5 0.5 0.5"
           gltf-model="static/models/scene.gltf"
         ></a-entity>
+        -->
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
