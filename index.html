@@ -2,19 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
-    />
-    <title>AR на полу — без маркера</title>
-    <script src="libs/aframe-v1.8.0.min.js"></script>
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <title>AR на полу</title>
+    <!-- Используем CDN для гарантии -->
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
-    <a-scene
+    <!-- Отладочная информация -->
+    <div style="position:absolute; top:10px; left:10px; color:white; background:rgba(0,0,0,0.7); padding:10px; z-index:999; font-size:14px; border-radius:8px;">
+      <div id="debug">Загрузка...</div>
+    </div>
+
+    <a-scene 
+      ar 
       webxr="optionalFeatures: hit-test,local-floor;"
-      ar-hit-test="target: #my-model;"
-      renderer="colorManagement: true"
+      renderer="colorManagement: true; antialias: true;"
     >
       <a-assets>
         <a-asset-item id="model" src="static/models/scene.gltf"></a-asset-item>
@@ -29,7 +32,45 @@
         scale="0.5 0.5 0.5"
       ></a-entity>
 
-      <a-entity camera look-controls></a-entity>
+      <a-entity camera></a-entity>
     </a-scene>
+
+    <script>
+      const debug = document.getElementById('debug');
+      
+      debug.innerHTML = '✅ A-Frame загружен<br>';
+      
+      // Ждем сцену
+      const scene = document.querySelector('a-scene');
+      
+      // Отслеживаем вход в AR
+      scene.addEventListener('enter-vr', function() {
+        debug.innerHTML += '✅ Вход в AR<br>';
+        debug.innerHTML += '👆 Нажмите на экран, чтобы поставить модель';
+      });
+      
+      scene.addEventListener('exit-vr', function() {
+        debug.innerHTML += '❌ Выход из AR<br>';
+      });
+      
+      // Отслеживаем ошибки
+      scene.addEventListener('rendererror', function(e) {
+        debug.innerHTML += '❌ Ошибка: ' + e.detail;
+      });
+      
+      // Ловим ошибки загрузки модели
+      document.querySelector('#model').addEventListener('error', function(e) {
+        debug.innerHTML += '❌ Модель не загружена: ' + e.detail;
+      });
+      
+      document.querySelector('#model').addEventListener('load', function() {
+        debug.innerHTML += '✅ Модель загружена!<br>';
+        debug.innerHTML += '👆 Нажмите на экран, чтобы разместить модель';
+      });
+      
+      window.onerror = function(msg) {
+        debug.innerHTML += '❌ Ошибка: ' + msg;
+      };
+    </script>
   </body>
 </html>
