@@ -37,48 +37,12 @@
     </a-scene>
 
     <script>
-      const debug = document.getElementById('debug');
-      
-      debug.innerHTML = '✅ A-Frame загружен<br>';
-      
-      // Ждем сцену
-      const scene = document.querySelector('a-scene');
-      
-      // Отслеживаем вход в AR
-      scene.addEventListener('enter-vr', function() {
-        debug.innerHTML += '✅ Вход в AR<br>';
-        debug.innerHTML += '👆 Нажмите на экран, чтобы поставить модель';
-      });
-      
-      scene.addEventListener('exit-vr', function() {
-        debug.innerHTML += '❌ Выход из AR<br>';
-      });
-      
-      // Отслеживаем ошибки
-      scene.addEventListener('rendererror', function(e) {
-        debug.innerHTML += '❌ Ошибка: ' + e.detail;
-      });
-      
-      // Ловим ошибки загрузки модели
-      document.querySelector('#model').addEventListener('error', function(e) {
-        debug.innerHTML += '❌ Модель не загружена: ' + e.detail;
-      });
-      
-      document.querySelector('#model').addEventListener('load', function() {
-        debug.innerHTML += '✅ Модель загружена!<br>';
-        debug.innerHTML += '👆 Нажмите на экран, чтобы разместить модель';
-      });
-      
-      window.onerror = function(msg) {
-        debug.innerHTML += '❌ Ошибка: ' + msg;
-      };
-    </script>
-    <script>
-      // Используем существующий элемент debug, не создаём новый
+      // Получаем элемент для отладки
       const debugElement = document.getElementById('debug');
       debugElement.innerHTML = '✅ A-Frame: ' + AFRAME.version + '<br>';
       debugElement.innerHTML += '⏳ Ожидание камеры...<br>';
       
+      // Получаем сцену (ТОЛЬКО ОДИН РАЗ)
       const scene = document.querySelector('a-scene');
       
       scene.addEventListener('enter-vr', function() {
