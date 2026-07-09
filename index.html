@@ -3,69 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
-    <title>AR на полу</title>
-    <script src="libs/aframe-v1.8.0.min.js"></script>
+    <title>AR с маркером</title>
+    
+    <!-- Подключаем ЛОКАЛЬНЫЕ файлы из папки libs -->
+    <script src="libs/aframe-master.min.js"></script>
+    <script src="libs/aframe-ar.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
-    <!-- Отладочная информация -->
-    <div style="position:absolute; top:10px; left:10px; color:white; background:rgba(0,0,0,0.7); padding:10px; z-index:999; font-size:14px; border-radius:8px;">
-      <div id="debug">Загрузка...</div>
-    </div>
-
-    <a-scene
-     renderer="alpha: true; colorManagement: true"
-     webxr="mode: ar; optionalFeatures: hit-test,local-floor; referenceSpaceType: local;"
-     xr-mode-ui="enabled: true; XRMode: ar; XRMode: vr;"
-     vr-mode-ui="enabled: false"
-     ar-hit-test="target: #my-model;"
-    >  
-      <a-assets>
-        <a-asset-item id="model" src="static/models/scene.gltf"></a-asset-item>
-      </a-assets>
-
-      <a-entity
-        id="my-model"
-        gltf-model="#model"
-        visible="false"
-        position="0 0 0"
-        rotation="-90 0 0"
-        scale="0.5 0.5 0.5"
-      ></a-entity>
-
+    <!-- Активируем AR.js в маркерном режиме -->
+    <a-scene arjs="sourceType: webcam; debugUIEnabled: true;">
+      
+      <!-- Используем стандартный маркер HIRO -->
+      <a-marker preset="hiro">
+        <!-- Ваша CAD-модель -->
+        <a-entity
+          gltf-model="static/models/scene.gltf"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+        ></a-entity>
+      </a-marker>
+      
       <a-entity camera></a-entity>
     </a-scene>
-
-    <script>
-      // Получаем элемент для отладки
-      const debugElement = document.getElementById('debug');
-      debugElement.innerHTML = '✅ A-Frame: ' + AFRAME.version + '<br>';
-      debugElement.innerHTML += '⏳ Ожидание камеры...<br>';
-      
-      // Получаем сцену (ТОЛЬКО ОДИН РАЗ)
-      const scene = document.querySelector('a-scene');
-      
-      scene.addEventListener('enter-vr', function() {
-        debugElement.innerHTML += '✅ Вход в AR! Нажми на экран<br>';
-      });
-      
-      scene.addEventListener('exit-vr', function() {
-        debugElement.innerHTML += '❌ Выход из AR<br>';
-      });
-      
-      // Отслеживаем hit-test
-      scene.addEventListener('hit-test', function(e) {
-        debugElement.innerHTML += '✅ Hit-test сработал!<br>';
-      });
-      
-      // Ловим загрузку модели
-      document.querySelector('#model').addEventListener('load', function() {
-        debugElement.innerHTML += '✅ Модель загружена!<br>';
-      });
-      
-      document.querySelector('#model').addEventListener('error', function() {
-        debugElement.innerHTML += '❌ Модель не загружена<br>';
-      });
-    </script>
   </body>
 </html>
