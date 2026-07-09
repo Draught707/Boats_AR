@@ -3,26 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
-    <title>AR с CAD-моделью</title>
-    <!-- Локальные библиотеки из папки libs -->
-    <script src="libs/aframe-master.min.js"></script>
-    <script src="libs/aframe-ar.js"></script>
+    <title>AR на полу — без маркера</title>
+    <!-- Загружаем A-Frame прямо из интернета -->
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
-      <a-marker preset="hiro">
-        <!-- Тестовый куб для проверки -->
-        <a-box color="red" position="0 0.5 0" scale="0.3 0.3 0.3"></a-box>
-        
-        <!-- Ваша CAD-модель -->
-        <a-entity
-          position="0 0 0"
-          rotation="-90 0 0"
-          scale="0.5 0.5 0.5"
-          gltf-model="/Boats_AR/static/models/scene.gltf"
-        ></a-entity>
-      </a-marker>
+    <a-scene
+      webxr="requiredFeatures: hit-test,local-floor;"
+      ar-hit-test="target:#my-model;"
+    >
+      <a-entity
+        id="my-model"
+        gltf-model="/Boats_AR/static/models/scene.gltf"
+        visible="false"
+        position="0 0 0"
+        rotation="-90 0 0"
+        scale="0.5 0.5 0.5"
+      ></a-entity>
       <a-entity camera></a-entity>
     </a-scene>
   </body>
