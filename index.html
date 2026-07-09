@@ -72,5 +72,42 @@
         debug.innerHTML += '❌ Ошибка: ' + msg;
       };
     </script>
+    <script>
+  const debug = document.getElementById('debug');
+  if (!debug) {
+    const div = document.createElement('div');
+    div.id = 'debug';
+    div.style.cssText = 'position:absolute; top:10px; left:10px; color:white; background:rgba(0,0,0,0.7); padding:10px; z-index:999; font-size:14px; border-radius:8px;';
+    document.body.appendChild(div);
+  }
+  
+  const d = document.getElementById('debug');
+  d.innerHTML = '✅ A-Frame: ' + AFRAME.version + '<br>';
+  d.innerHTML += '⏳ Ожидание камеры...<br>';
+  
+  const scene = document.querySelector('a-scene');
+  
+  scene.addEventListener('enter-vr', function() {
+    d.innerHTML += '✅ Вход в AR! Нажми на экран<br>';
+  });
+  
+  scene.addEventListener('exit-vr', function() {
+    d.innerHTML += '❌ Выход из AR<br>';
+  });
+  
+  // Отслеживаем hit-test
+  scene.addEventListener('hit-test', function(e) {
+    d.innerHTML += '✅ Hit-test сработал!<br>';
+  });
+  
+  // Ловим загрузку модели
+  document.querySelector('#model').addEventListener('load', function() {
+    d.innerHTML += '✅ Модель загружена!<br>';
+  });
+  
+  document.querySelector('#model').addEventListener('error', function() {
+    d.innerHTML += '❌ Модель не загружена<br>';
+  });
+</script>
   </body>
 </html>
