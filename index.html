@@ -4,17 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
     <title>AR с CAD-моделью</title>
-    <!-- A-Frame - локально -->
-    <script src="libs/aframe.min.js"></script>
-    <!-- AR.js - из CDN (работает гарантированно) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.0.0/dist/aframe-ar.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
       <a-marker preset="hiro">
-        <!-- Сначала тестовый куб -->
+        <!-- Тестовый куб для проверки -->
         <a-box color="red" position="0 0.5 0" scale="0.3 0.3 0.3"></a-box>
+        
+        <!-- Ваша CAD-модель (раскомментируйте, когда куб заработает) -->
+        <!--
+        <a-entity
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.5 0.5 0.5"
+          gltf-model="/Boats_AR/static/models/scene.gltf"
+        ></a-entity>
+        -->
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
