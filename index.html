@@ -8,7 +8,8 @@
     />
     <title>AR на полу — без маркера</title>
 
-    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+    <script src="libs/aframe.min.js"></script>
+    <script src="libs/ar-hit-test.js"></script>
 
     <script>
       AFRAME.registerComponent("place-model-on-select", {
@@ -26,9 +27,7 @@
 
           sceneEl.addEventListener("ar-hit-test-select", function (e) {
             console.log("Placed:", e.detail);
-            if (modelEl) {
-              modelEl.setAttribute("visible", "true");
-            }
+            if (modelEl) modelEl.setAttribute("visible", "true");
           });
         },
       });
