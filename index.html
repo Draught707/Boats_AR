@@ -7,37 +7,13 @@
       content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
     />
     <title>AR на полу — без маркера</title>
-
     <script src="libs/aframe-master.min.js"></script>
-    
-    <script>
-      AFRAME.registerComponent("place-model-on-select", {
-        init: function () {
-          const sceneEl = this.el;
-          const modelEl = document.querySelector("#my-model");
-
-          sceneEl.addEventListener("ar-hit-test-start", function () {
-            console.log("AR hit-test started");
-          });
-
-          sceneEl.addEventListener("ar-hit-test-achieved", function () {
-            console.log("Surface found");
-          });
-
-          sceneEl.addEventListener("ar-hit-test-select", function (e) {
-            console.log("Placed:", e.detail);
-            if (modelEl) modelEl.setAttribute("visible", "true");
-          });
-        },
-      });
-    </script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
     <a-scene
-      webxr="requiredFeatures: hit-test,local-floor;"
-      ar-hit-test="target:#my-model;"
-      place-model-on-select
+      webxr="optionalFeatures: hit-test,local-floor;"
+      ar-hit-test="target: #my-model;"
       renderer="colorManagement: true"
     >
       <a-assets>
