@@ -32,17 +32,17 @@
   </body>
   
   <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const model = document.querySelector('[glb-model]');
+  document.addEventListener('DOMContentLoaded', function() {
+    const model = document.querySelector('[glb-model]');
   
-  if (model) {
-    model.addEventListener('model-loaded', function() {
-      console.log('✅ МОДЕЛЬ ЗАГРУЖЕНА!');
-    });
+    if (model) {
+      model.addEventListener('model-loaded', function() {
+        console.log('✅ МОДЕЛЬ ЗАГРУЖЕНА!');
+      });
     
-    model.addEventListener('model-error', function(e) {
-      console.error('❌ ОШИБКА ЗАГРУЗКИ:', e.detail);
-    });
+      model.addEventListener('model-error', function(e) {
+        console.error('❌ ОШИБКА ЗАГРУЗКИ:', e.detail);
+      });
   }
 });
 </script>
